@@ -46,7 +46,7 @@ DeviceFileEvents
 // TOR Browser being silently installed
 // Take note of two spaces before the /S (I don't know why)
 DeviceProcessEvents
-| where ProcessCommandLine contains "tor-browser-windows-x86_64-portable-14.0.1.exe  /S"
+| where ProcessCommandLine contains "tor-browser-windows"
 | where DeviceName == 'vuln-vm-windows'
 | project Timestamp, DeviceName, ActionType, FileName, ProcessCommandLine
 
@@ -66,7 +66,7 @@ DeviceProcessEvents
 DeviceNetworkEvents
 | where InitiatingProcessFileName in~ ("tor.exe", "firefox.exe")
 | where DeviceName == 'vuln-vm-windows'
-| where RemotePort in (9001, 9030, 9040, 9050, 9051, 9150)
+| where RemotePort in (9001, 9030, 9040, 9050, 9051, 9150, 443, 80)
 | project Timestamp, DeviceName, InitiatingProcessAccountName, InitiatingProcessFileName, RemoteIP, RemotePort, RemoteUrl
 | order by Timestamp desc
 
